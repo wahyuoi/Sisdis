@@ -1,7 +1,8 @@
 package com.sisdis.resources;
 
+import com.google.gson.Gson;
 import com.sisdis.Util.ImageUtil;
-import org.json.JSONObject;
+import com.sisdis.representations.ImageInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,6 @@ import java.net.URLConnection;
  * Created by wahyuoi on 9/30/15.
  */
 @Path("tugas2/client")
-@Produces(MediaType.TEXT_HTML)
 public class ImageInformationClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageInformationClient.class);
 
@@ -42,10 +42,11 @@ public class ImageInformationClient {
             }
             reader.close();
 
-            JSONObject jsonObject = new JSONObject(line);
-            String isi_berkas = (String) jsonObject.get("isi_berkas");
-            String path = jsonObject.getString("lokasi_berkas");
-            String ukuran = jsonObject.getString("ukuran_berkas");
+            Gson gson = new Gson();
+            ImageInformation temp_image = gson.fromJson(line, ImageInformation.class);
+            String isi_berkas = temp_image.getIsi_berkas();
+            String path = temp_image.getLokasi_berkas();
+            String ukuran = temp_image.getUkuran_berkas();
 
             // TODO tinggal nampilin base64 image udah selesai, deploy deh
             return Response.ok("<img src='data:image/jpg;base64, "+isi_berkas+"' /><br>" +
