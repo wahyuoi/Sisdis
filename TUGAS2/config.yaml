@@ -1,0 +1,13 @@
+database:
+  driverClass: com.mysql.jdbc.Driver
+  user:
+  password:
+  url: jdbc:mysql://localhost/DBNAME
+
+logging:
+  level: INFO
+
+allowedGrantTypes:
+  - password
+
+bearerRealm: oauth2-provider
